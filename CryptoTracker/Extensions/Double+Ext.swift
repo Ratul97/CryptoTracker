@@ -10,7 +10,7 @@ import Foundation
 extension Double {
     private var numberFormatter: NumberFormatter {
         let numberFormatter = NumberFormatter()
-        numberFormatter.minimumIntegerDigits = 0
+        numberFormatter.minimumFractionDigits = 2
         numberFormatter.maximumFractionDigits = 2
         return numberFormatter
     }

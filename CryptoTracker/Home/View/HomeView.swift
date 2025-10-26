@@ -9,7 +9,8 @@ import SwiftUI
 
 struct HomeView: View {
     
-    @State private var showCryptoList: Bool = false
+    @EnvironmentObject var viewModel: HomeViewModel
+    @State private var showPortfolio: Bool = false
     
     var body: some View {
         NavigationView {
@@ -17,8 +18,18 @@ struct HomeView: View {
                 Color.theme.background
                     .ignoresSafeArea()
                 
+                
+                
                 VStack {
                     headerView
+                    
+                    titleView
+                    
+                    if !showPortfolio {
+                        coinListView
+                    } else {
+                        coinHoldingListView
+                    }
                     
                     Spacer()
                 }
@@ -29,36 +40,75 @@ struct HomeView: View {
     
     private var headerView: some View {
         HStack {
-            CircularButtonView(imageName: showCryptoList ?  "info.bubble.fill" : "plus")
-                .animation(.easeInOut, value: showCryptoList)
+            CircularButtonView(imageName: showPortfolio ?  "info.bubble.fill" : "plus")
+                .animation(.easeInOut, value: showPortfolio)
                 .background(
-                    CircularButtonAnimationView(animated: $showCryptoList)
+                    CircularButtonAnimationView(animated: $showPortfolio)
                 )
             
             Spacer()
             
-            Text(showCryptoList ? "Portpholio" : "Live Update")
+            Text(showPortfolio ? "Portpholio" : "Live Update")
                 .font(.headline)
                 .foregroundStyle(Color.theme.accent)
-                .animation(.easeInOut, value: showCryptoList)
+                .animation(.easeInOut, value: showPortfolio)
             
             Spacer()
             
             CircularButtonView(imageName: "chevron.right")
-                .rotationEffect(showCryptoList ? Angle(degrees: 180.0) : Angle(degrees: 0.0))
-                .animation(.easeInOut, value: showCryptoList)
+                .rotationEffect(showPortfolio ? Angle(degrees: 180.0) : Angle(degrees: 0.0))
+                .animation(.easeInOut, value: showPortfolio)
                 
                 .onTapGesture {
-                    showCryptoList.toggle()
+                    withAnimation(.spring()) {
+                        showPortfolio.toggle()
+                    }
                 }
         }
         .padding(.horizontal)
+    }
+    
+    private var titleView: some View {
+        HStack {
+            Text("Coin")
+            Spacer()
+            if showPortfolio {
+                Text("Holding")
+            }
+            
+            Spacer()
+            Text("Statistics")
+        }
+        .padding(.horizontal, 20)
+        .font(.caption.bold())
+    }
+    
+    private var coinListView: some View {
+        List {
+            ForEach(viewModel.coins) { coin in
+                CoinInfoRowView(coin: coin, showCurrentHolding: false)
+                    .listRowInsets(EdgeInsets(top: 5.0, leading: 0.0, bottom: 5.0, trailing: 0.0))
+            }
+        }
+        .listStyle(.plain)
+        .transition(.move(edge: .leading))
+    }
+    
+    private var coinHoldingListView: some View {
+        List {
+            ForEach(viewModel.coins) { coin in
+                CoinInfoRowView(coin: coin, showCurrentHolding: true)
+                    .listRowInsets(EdgeInsets(top: 5.0, leading: 0.0, bottom: 5.0, trailing: 0.0))
+            }
+        }
+        .listStyle(.plain)
+        .transition(.move(edge: .trailing))
     }
 }
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
         HomeView()
-            .toolbar(.hidden)
+            .environmentObject(HomeViewModel())
     }
 }
