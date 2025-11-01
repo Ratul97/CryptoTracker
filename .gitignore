@@ -1,0 +1,21 @@
+# Xcode
+.DS_Store
+build/
+DerivedData/
+*.moved-aside
+*.pbxuser
+!default.pbxuser
+*.xcscmblueprint
+*.xccheckout
+*.xcuserdatad
+*.xcconfig
+xcuserdata/
+
+# Swift Package Manager
+.build/
+
+# Carthage
+Carthage/Build/
+
+# CocoaPods
+Pods/

@@ -8,10 +8,20 @@
 import Combine
 
 class HomeViewModel: ObservableObject {
+    private let coinService = CoinService.shared
     @Published var coins : [CoinModel] = []
 
+    private var cancellables: Set<AnyCancellable> = []
     
     init() {
-        self.coins.append(DeveloperPreview.instance.coin)
+        fetchCoins()
+    }
+    
+    private func fetchCoins() {
+        coinService.$coinData
+            .sink(receiveValue: { [weak self] coins in
+                self?.coins = coins
+            })
+            .store(in: &cancellables)
     }
 }

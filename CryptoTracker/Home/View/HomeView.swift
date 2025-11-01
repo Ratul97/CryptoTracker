@@ -18,8 +18,6 @@ struct HomeView: View {
                 Color.theme.background
                     .ignoresSafeArea()
                 
-                
-                
                 VStack {
                     headerView
                     
@@ -35,6 +33,9 @@ struct HomeView: View {
                 }
             }
             .toolbar(.hidden)
+        }
+        .onAppear {
+            CoinService.shared
         }
     }
     

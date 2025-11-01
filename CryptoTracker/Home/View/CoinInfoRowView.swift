@@ -83,7 +83,7 @@ struct CoinInfoRowView: View {
                     .padding(.vertical, 4)
                     .padding(.horizontal, 8)
                     .background(isPositive ? Color.theme.tagBackground : Color.theme.red)
-                    .clipShape(RoundedRectangle(cornerRadius: 12))
+                    .clipShape(RoundedRectangle(cornerRadius: 8))
             }
         }
     }
