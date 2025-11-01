@@ -37,6 +37,7 @@ class CoinService {
                 return data
             }
             .decode(type: [CoinModel].self, decoder: JSONDecoder())
+            .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { completion in
                 switch completion {
                 case .finished:

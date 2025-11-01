@@ -1,0 +1,11 @@
+//
+//  Config.xcconfig
+//  CryptoTracker
+//
+//  Created by Kazi Shakawat Hossain Ratul on 2/11/25.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://developer.apple.com/documentation/xcode/adding-a-build-configuration-file-to-your-project
+
+COIN_API_KEY = "CG-tZYZZ2sdKrfVRu3ySMgydgVa"
