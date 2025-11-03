@@ -6,6 +6,7 @@
 //
 
 import Combine
+import Foundation
 
 class HomeViewModel: ObservableObject {
     private let coinService = CoinService.shared
@@ -18,8 +19,16 @@ class HomeViewModel: ObservableObject {
     }
     
     private func fetchCoins() {
-        coinService.$coinData
-            .sink(receiveValue: { [weak self] coins in
+        coinService.fetchCoins()
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { completion in
+                switch completion {
+                case .finished:
+                    break
+                case .failure(let error):
+                    print(error)
+                }
+            }, receiveValue: { [weak self] coins in
                 self?.coins = coins
             })
             .store(in: &cancellables)
