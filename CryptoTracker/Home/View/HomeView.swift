@@ -34,9 +34,6 @@ struct HomeView: View {
             }
             .toolbar(.hidden)
         }
-        .onAppear {
-            CoinService.shared
-        }
     }
     
     private var headerView: some View {

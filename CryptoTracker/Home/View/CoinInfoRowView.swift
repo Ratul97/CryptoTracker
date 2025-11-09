@@ -16,7 +16,8 @@ struct CoinInfoRowView: View {
         HStack {
             coinRankView
             
-            coinImageView
+            CoinImageView(imageURL: coin.image)
+                .frame(width: 20, height: 20)
             
             coinNameView
             
@@ -38,12 +39,6 @@ struct CoinInfoRowView: View {
         Text("\(coin.rank)")
             .font(.caption)
             .foregroundStyle(Color.theme.secondaryText)
-    }
-    
-    private var coinImageView: some View {
-        Circle()
-            .frame(width: 20, height: 20)
-            .foregroundStyle(Color.theme.accent)
     }
     
     private var coinNameView: some View {
